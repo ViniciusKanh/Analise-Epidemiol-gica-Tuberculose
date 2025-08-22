@@ -1,134 +1,118 @@
-# Análise Visual da Epidemiologia da Tuberculose em Minas Gerais
+# Análise Epidemiológica e Visualização de Dados — Tuberculose (MG)
 
-> Projeto de ciência de dados com foco em **visualização** e **insights epidemiológicos** a partir de dados abertos.
+Repositório **sem código**. O objetivo é disponibilizar **artefatos de visualização** e documentação técnica para leitura, verificação e comunicação de resultados.
 
 ---
 
-## 📌 Objetivos
-- Consolidar dados públicos de tuberculose (MG) e produzir **visualizações explicativas** (mapas, gráficos e dashboard).
-- Documentar um **pipeline reprodutível** (Python/Colab + Power BI) para EDA e storytelling de dados.
-- Disponibilizar artefatos: **notebook**, **mapa interativo**, **relatório de perfilamento**, **gráficos** e **dashboard**.
+## 1) Visão Geral
+- Tema: epidemiologia da **tuberculose** em Minas Gerais (2001–2021).
+- Entregáveis: **dashboard Power BI**, **mapa interativo (HTML)**, **relatório de perfilamento**, **figuras estáticas** (PNG), **apresentação** (PPTX) e **manuscrito** (PDF).
+- Uso previsto: exploração descritiva, suporte a ensino, comunicação científica e decisões de saúde pública (nível descritivo).
 
-## 🗂️ Estrutura do Repositório
+---
+
+## 2) Estrutura do Repositório
 ```
 .
-├── data/                         # Dados brutos e tratados (não versionar grandes CSVs)
-├── notebooks/
-│   └── Analise-Tuberculose.ipynb # EDA e geração das figuras
-├── reports/
-│   ├── tuberculose_profile_report.html  # Perfilamento automático (ydata-profiling)
-│   ├── Analise-dos-Graficos.pdf        # Interpretação textual das figuras
-│   └── Manuscrito_Artigo.pdf           # Manuscrito técnico/acadêmico
-├── dashboards/
-│   └── Dash-Tuberculose.pbix           # Dashboard Power BI
-├── docs/
-│   ├── img/
-│   │   ├── Correlacao.png
-│   │   └── Grafico_de_Radar.png
-│   └── mapa_tuberculose.html           # Mapa Folium (interativo)
-├── slides/
-│   └── Apresentacao-Tuberculose.pptx   # Deck de slides
-├── requirements.txt
+├── 0-Dataset/                      # Dados brutos e derivados (não publicar CSVs sensíveis/grandes)
+├── 1-Pré Processamento/            # Produtos do EDA e organização dos insumos visuais
+├── 2-Dashboard e Apresentação/     # Dashboard (.pbix) e slides (.pptx)
+├── 3-Artigo/                       # Manuscrito e relatórios técnicos (PDF)
+├── LICENSE
 └── README.md
 ```
 
-> **Observação**: mantenha arquivos grandes (CSV/Parquet/PBIX) fora do Git ou use Git LFS. Armazene credenciais via variáveis de ambiente.
+### Conteúdo esperado por pasta
+- **0-Dataset/**
+  - Dicionário de dados; metadados da fonte; snapshots de tabelas públicas.
+  - *Boa prática*: não versionar arquivos muito grandes; preferir Git LFS ou link para fonte oficial.
 
-## 📥 Dados
-- **Fonte**: Portal de Dados Abertos do Governo de Minas Gerais.
-- **Período**: 2001–2021 (informações demográficas, geográficas e clínicas).
-- **Escopo**: casos notificados, variáveis clínicas (HIV, diabetes, baciloscopia etc.), desfechos (cura, abandono, óbito), sexo, faixa etária, raça/cor, município, zona.
-- **Licença**: conforme o portal de dados (verifique termos antes de redistribuir).
+- **1-Pré Processamento/**
+  - **`tuberculose_profile_report.html`**: perfilamento automático (ydata‑profiling).
+  - **`Analise dos Graficos.pdf`**: interpretação técnica das figuras.
+  - **`mapa_tuberculose.html`**: mapa interativo (Folium).
+  - **Figuras** (ex.: `Correlacao.png`, `Grafico_de_Radar.png`), prontos para citação em artigo/slide.
 
-## 🔧 Ambiente e Instalação
-Requisitos mínimos:
-- Python ≥ 3.10
-- Power BI Desktop (para abrir o `.pbix`)
+- **2-Dashboard e Apresentação/**
+  - **`Dash-Tuberculose.pbix`**: relatório Power BI com navegação por sexo, idade, zona, desfecho e comorbidades.
+  - **`Slides-*.pptx`**: apresentação para defesa/briefing executivo.
 
-Crie e ative um ambiente virtual e instale as dependências:
-```bash
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# Linux/macOS
-# source .venv/bin/activate
+- **3-Artigo/**
+  - **`Manuscrito_*.pdf`** e versões (`Analise de TB-VI.pdf`, `Analise-Tuberculose.pdf`).
 
-pip install -U pip
-pip install -r requirements.txt
+---
+
+## 3) Como Navegar (passo a passo)
+1. **Dashboard**: abrir `2-Dashboard e Apresentação/Dash-Tuberculose.pbix` no **Power BI Desktop** (Windows).
+2. **Mapa interativo**: abrir `1-Pré Processamento/mapa_tuberculose.html` em um navegador moderno.
+3. **Perfilamento de dados**: abrir `1-Pré Processamento/tuberculose_profile_report.html` para estatísticas, tipos e alertas de qualidade.
+4. **Figuras estáticas**: utilizar `1-Pré Processamento/*.png` em artigos, relatórios e slides (DPI ≥ 200).
+5. **Manuscrito/relatórios**: consultar `3-Artigo/*.pdf` para contexto metodológico e discussão.
+
+> *Observação:* este repositório não contém notebooks ou scripts. A reprodutibilidade de cálculos deve ser conduzida com base nos metadados, métodos e referências descritos no manuscrito e no relatório de gráficos.
+
+---
+
+## 4) Metodologia (resumo executivo)
+- **Pré‑processamento**: padronização de tipos; tratamento de nulos e categorias “Ignorado”; harmonização temporal (2001–2021).
+- **Agregações**: totais por mês/ano, sexo, faixa etária, zona e situação de encerramento (cura, abandono, óbito etc.).
+- **Comorbidades**: indicadores para HIV, diabetes e outros agravos.
+- **Visualização**:
+  - **Heatmap de correlação** entre variáveis (apoia seleção de atributos e leitura de redundâncias).
+  - **Radar mensal por desfecho** para sazonalidade/volume relativo.
+  - **Mapa interativo** para variações espaciais e densidade de casos.
+  - **Dashboard** para exploração guiada com filtros e segmentos.
+- **Validação**: conferência de totais anuais, consistência de faixas etárias e campos críticos; discussão em `Analise dos Graficos.pdf` e no manuscrito.
+
+---
+
+## 5) Principais Achados (síntese)
+- **Predominância masculina** e concentração em **adultos/idosos**.
+- **Cura** como desfecho mais frequente; **abandono** e **óbitos** em menor proporção, porém relevantes.
+- **Co‑infecção por HIV** e **diabetes** com impacto programático.
+- **Maior concentração urbana** de notificações (associada à densidade populacional).
+- Interpretações detalhadas e limitações: ver PDFs em `1-Pré Processamento/` e `3-Artigo/`.
+
+---
+
+## 6) Dados e Proveniência
+- **Fonte principal**: dados públicos da Secretaria de Saúde/Estado de Minas Gerais (ver metadados em `0-Dataset/`).
+- **Cobertura temporal**: 2001–2021.
+- **Licença de dados**: respeitar termos do portal público; **não redistribuir** dados sensíveis/identificáveis.
+- **Ética**: uso estritamente acadêmico/educacional; resultados são **descritivos** e não implicam causalidade.
+
+---
+
+## 7) Requisitos para Abertura de Arquivos
+- **Power BI Desktop** para `.pbix`.
+- **Navegador** atualizado para `.html` (mapa e perfilamento).
+- **Leitor PDF** para relatórios/manuscrito.
+- **Microsoft PowerPoint** (opcional) para `.pptx`.
+
+---
+
+## 8) Citação
 ```
-
-### `requirements.txt` sugerido
-```text
-pandas>=2.2
-numpy>=1.26
-matplotlib>=3.8
-plotly>=5.22
-folium>=0.16
-ydata-profiling>=4.8
-geopandas>=1.0; platform_system != "Windows"  # opcional
-pyarrow>=17.0
+Santos, V. (2024). Análise Epidemiológica e Visualização de Dados — Tuberculose (MG).
+Repositório de artefatos visuais e documentação técnica.
 ```
-
-> **Dica**: se usar Google Colab, suba o notebook `notebooks/Analise-Tuberculose.ipynb` e aponte o caminho da pasta `data/` no início do notebook.
-
-## ▶️ Reprodutibilidade (Passo a Passo)
-1. **Obtenha os dados** no portal (CSV) e coloque em `data/raw/`.
-2. **Execute o notebook** `notebooks/Analise-Tuberculose.ipynb` para:
-   - limpeza e padronização (tipos, nulos, categorias);
-   - geração do **perfilamento** (`reports/tuberculose_profile_report.html`);
-   - produção das **figuras** (salvas em `docs/img/`);
-   - exportação do **mapa Folium** (`docs/mapa_tuberculose.html`).
-3. **Abra o dashboard** `dashboards/Dash-Tuberculose.pbix` no Power BI e aponte as fontes em `data/`.
-4. **Valide** os resultados com o relatório `reports/Analise-dos-Graficos.pdf` e o **manuscrito**.
-
-## 📊 Visualizações Principais
-- **Heatmap de correlação** entre variáveis categóricas e clínicas.
-  ![Heatmap de Correlação](docs/img/Correlacao.png)
-- **Gráfico de Radar** por **situação de encerramento** (mensal).
-  ![Gráfico de Radar](docs/img/Grafico_de_Radar.png)
-- **Mapa interativo** (Folium) com municípios/clusterização: `docs/mapa_tuberculose.html`.
-- **Dashboard Power BI** com navegação por sexo, idade, zona, desfecho e comorbidades.
-
-## 🔍 Principais Achados (resumo)
-- **Predominância masculina** nos casos notificados.
-- **Adultos e idosos** concentrando maior incidência.
-- **Cura** recorrente como desfecho majoritário; **abandono** e **óbito** existem, mas em menor proporção.
-- **Co-infecção por HIV** e **diabetes** aparecem como **comorbidades relevantes** e exigem atenção programática.
-- **Áreas urbanas** concentram maior número de casos, sugerindo relação com densidade populacional.
-
-> *Interpretações completas e limitações* estão detalhadas em `reports/Analise-dos-Graficos.pdf` e no manuscrito técnico.
-
-## ⚠️ Limitações e Ameaças à Validade
-- Subnotificação e campos **“Ignorado/Não informado”** em variáveis críticas.
-- Possíveis **mudanças de definição** ao longo dos anos (2001–2021).
-- Ausência de variáveis socioeconômicas em parte do período.
-- Visualizações **não implicam causalidade**; tratam-se de padrões e associações descritivas.
-
-## 🧪 Testes e Qualidade
-- Linters e formatação (opcional): `ruff`, `black`.
-- Validações rápidas no notebook (consistência de faixas etárias, distribuição por sexo, totais por ano).
-- Exportação controlada das figuras (DPI ≥ 200) e nomes de arquivo estáveis.
-
-## 📝 Como Citar
-Se utilizar este repositório, cite da seguinte forma:
-```
-Santos, V. (2024). Análise Visual da Epidemiologia da Tuberculose em Minas Gerais.
-Repositório e materiais suplementares. Disponível em: <link do repositório>.
-```
-Ou em BibTeX:
+BibTeX:
 ```bibtex
-@misc{Santos2024TuberculoseViz,
+@misc{Santos2024TBViz,
   author = {Santos, Vinícius de Souza},
-  title  = {Análise Visual da Epidemiologia da Tuberculose em Minas Gerais},
+  title  = {Análise Epidemiológica e Visualização de Dados — Tuberculose (MG)},
   year   = {2024},
-  note   = {Repositório e materiais suplementares}
+  note   = {Repositório de artefatos visuais e documentação técnica}
 }
 ```
 
-## 📣 Contato
-- Autor: **Vinícius de Souza Santos**
-- E-mail: <seu-email@exemplo.com>
-- Afiliação: UNESP — PPGC
+---
 
-## 📄 Licença
-Este projeto está sob a licença **MIT**. Veja `LICENSE` para detalhes.
+## 9) Contato e Afiliação
+**Autor**: Vinícius de Souza Santos — UNESP/PPGC  
+**E-mail**: vinicius-souza.santos@unesp.br
+
+---
+
+## 10) Licença
+Este repositório está sob **MIT** (ver `LICENSE`). Artefatos de dados e conteúdos de terceiros seguem as respectivas licenças/origens.
